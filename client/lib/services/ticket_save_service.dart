@@ -27,10 +27,10 @@ class TicketSaveService {
 
       print('📸 Capturing widget...');
 
-      final Uint8List? imageBytes = await controller.captureFromWidget(
+      final Uint8List imageBytes = await controller.captureFromWidget(
         MediaQuery(
           data: const MediaQueryData(
-            size: Size(400, 900),  // ← Height increased
+            size: Size(400, 1000),  // ← Height increased
             devicePixelRatio: 2.0,
           ),
           child: Directionality(
@@ -49,11 +49,6 @@ class TicketSaveService {
         pixelRatio: 2.5,
         delay: const Duration(milliseconds: 500),
       );
-
-      if (imageBytes == null) {
-        print('❌ Image bytes null');
-        return false;
-      }
 
       print('✅ Image captured: ${imageBytes.length} bytes');
 

@@ -332,7 +332,7 @@ class _SelectShowtimeScreenState extends State<SelectShowtimeScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: AppColors.error.withOpacity(0.1),
+                            color: AppColors.error.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Column(
@@ -384,7 +384,7 @@ class _SelectShowtimeScreenState extends State<SelectShowtimeScreen> {
                   onPressed: _allSelected ? _proceedToSeatSelection : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    disabledBackgroundColor: AppColors.primary.withOpacity(0.4),
+                    disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.4),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -463,7 +463,7 @@ class _SelectShowtimeScreenState extends State<SelectShowtimeScreen> {
                     height: 140,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(height: 140, color: AppColors.primaryLight),
+                    errorBuilder: (_, _, _) => Container(height: 140, color: AppColors.primaryLight),
                   ),
                 ),
                 if (selected)
@@ -497,7 +497,7 @@ class _SelectShowtimeScreenState extends State<SelectShowtimeScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
-                          color: (venue['tagColor'] as Color).withOpacity(0.15),
+                          color: (venue['tagColor'] as Color).withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
@@ -544,7 +544,7 @@ class _SelectShowtimeScreenState extends State<SelectShowtimeScreen> {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: selected ? Colors.white.withOpacity(0.2) : AppColors.primary.withOpacity(0.1),
+                color: selected ? Colors.white.withValues(alpha: 0.2) : AppColors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(

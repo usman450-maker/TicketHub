@@ -4,6 +4,11 @@ import '../../../services/storage_service.dart';
 import '../widgets/category_item.dart';
 import '../widgets/trending_card.dart';
 import '../../../core/routes/route_names.dart';
+import '../../bus/bus_search_screen.dart';
+import '../../flight/flight_search_screen.dart';
+import '../../train/train_search_screen.dart';
+import '../../sports/sports_home_screen.dart';
+import '../../events/events_home_screen.dart';
 
 class ExploreTab extends StatefulWidget {
   const ExploreTab({super.key});
@@ -166,26 +171,52 @@ Padding(
             label: 'Movies',
             onTap: () => Navigator.pushNamed(context, RouteNames.movies),
           ),
-          const CategoryItem(
-            icon: Icons.directions_bus_outlined,
-            label: 'Bus',
-          ),
-          const CategoryItem(
-            icon: Icons.train_outlined,
-            label: 'Train',
-          ),
-          const CategoryItem(
-            icon: Icons.flight,
-            label: 'Flights',
-          ),
+          CategoryItem(
+  icon: Icons.directions_bus_outlined,
+  label: 'Bus',
+  onTap: () => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (_) => const BusSearchScreen()),
+  ),
+),
+          CategoryItem(
+  icon: Icons.train,
+  label: 'Train',
+  onTap: () => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (_) => const TrainSearchScreen()),
+  ),
+),
+          CategoryItem(
+  icon: Icons.flight,
+  label: 'Flights',
+  onTap: () => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (_) => const FlightSearchScreen()),
+  ),
+),
         ],
       ),
       const SizedBox(height: 20),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: const [
-          CategoryItem(icon: Icons.event_seat, label: 'Events'),
-          CategoryItem(icon: Icons.sports_soccer, label: 'Sports'),
+        children:  [
+          CategoryItem(
+  icon: Icons.event_seat,
+  label: 'Events',
+  onTap: () => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (_) => const EventsHomeScreen()),
+  ),
+),
+          CategoryItem(
+  icon: Icons.sports_soccer,
+  label: 'Sports',
+  onTap: () => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (_) => const SportsHomeScreen()),
+  ),
+),
           CategoryItem(icon: Icons.park_outlined, label: 'Parks'),
           CategoryItem(icon: Icons.apps, label: 'More'),
         ],

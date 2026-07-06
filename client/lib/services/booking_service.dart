@@ -61,12 +61,18 @@ class BookingService {
   );
 }
   // Get user's bookings
-  static Future<Map<String, dynamic>> getMyBookings() async {
-    final token = await StorageService.getToken();
-
-    return await ApiService.get(
-      url: ApiEndpoints.myBookings,
-      token: token,
-    );
-  }
+static Future<Map<String, dynamic>> getMyBookings() async {
+  final token = await StorageService.getToken();
+  print('🎬 Fetching movie bookings...');
+  print('🎬 Token exists: ${token != null && token.isNotEmpty}');
+  print('🎬 URL: ${ApiEndpoints.myBookings}');
+  
+  final response = await ApiService.get(
+    url: ApiEndpoints.myBookings,
+    token: token,
+  );
+  
+  print('🎬 Response: $response');
+  return response;
+}
 }
