@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 
 class ApiEndpoints {
   // ⚠️ Your PC IP address (find with: ipconfig)
-// Change to YOUR IP
+/ Change to YOUR IP
 
   static String get baseUrl {
     if (kIsWeb) {
-     
+   
     }
     return 'http://$_pcIp:5000/api';
   }
@@ -64,7 +64,7 @@ static String get confirmTransportBooking => '$baseUrl/transport/confirm';
 static String get myTransportBookings => '$baseUrl/transport/my-bookings';
 
 
-  static const String tmdbApiKey = ; // ⚠️ Paste your TMDB key
+  static const String tmdbApiKey = '; // ⚠️ Paste your TMDB key
   static const String tmdbBaseUrl = 'https://api.themoviedb.org/3';
   static const String tmdbImageBase = 'https://image.tmdb.org/t/p/w500';
   static const String tmdbImageOriginal = 'https://image.tmdb.org/t/p/original';

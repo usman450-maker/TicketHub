@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Stripe
-  Stripe.publishableKey = 'pk_test_51Tp9LiHrUeFBM6o1doBtPqcw64McQWxIHIwBzmZIgn0UzaDTVqkSgPfmlITKt5Q5gxagIFDRjZJf38s9YlKyUBBQ00YTzqeMdA';
+  Stripe.publishableKey = '';
   await Stripe.instance.applySettings();
 
   // Request permissions on start

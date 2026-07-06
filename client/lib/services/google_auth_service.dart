@@ -7,7 +7,7 @@ import 'storage_service.dart';
 class GoogleAuthService {
   // ⚠️ Replace with your actual Web Client ID from Google Cloud Console
   static const String _webClientId =
-      '';
+      '\';
 
   static final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
