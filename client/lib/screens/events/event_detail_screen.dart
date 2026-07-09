@@ -100,8 +100,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
-                                  Colors.black.withOpacity(0.3),
-                                  Colors.black.withOpacity(0.8),
+                                  Colors.black.withValues(alpha: 0.3),
+                                  Colors.black.withValues(alpha: 0.8),
                                 ],
                               ),
                             ),
@@ -200,57 +200,108 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                           const SizedBox(height: 20),
 
                           // Artists
-                          if (artists.isNotEmpty) ...[
-                            const Text('Artist Lineup',
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                            const SizedBox(height: 12),
-                            SizedBox(
-                              height: 100,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: artists.length,
-                                itemBuilder: (context, index) {
-                                  final roles = ['HEADLINER', 'SUPPORT', 'OPENING ACT'];
-                                  return Container(
-                                    width: 120,
-                                    margin: const EdgeInsets.only(right: 10),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary.withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 40,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.primary,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Icon(Icons.music_note,
-                                              color: Colors.white, size: 20),
-                                        ),
-                                        const SizedBox(height: 6),
-                                        Text(artists[index],
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                fontSize: 11, fontWeight: FontWeight.bold)),
-                                        Text(
-                                            index < roles.length ? roles[index] : 'PERFORMER',
-                                            style: const TextStyle(
-                                                fontSize: 8,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color(0xFFC49B63))),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                          ],
+                     // Artists
+if (artists.isNotEmpty) ...[
+  const Text('Artist Lineup',
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+  const SizedBox(height: 12),
+  SizedBox(
+    height: 140,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: artists.length,
+      itemBuilder: (context, index) {
+        final roles = ['HEADLINER', 'SUPPORT', 'OPENING ACT', 'PERFORMER', 'GUEST'];
+        
+        // Real artist images from Unsplash
+        final artistImages = [
+          'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400',
+          'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400',
+          'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400',
+          'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400',
+          'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400',
+        ];
+
+        final imageUrl = index < artistImages.length
+            ? artistImages[index]
+            : artistImages[index % artistImages.length];
+
+        return Container(
+          width: 130,
+          margin: const EdgeInsets.only(right: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: Image.network(
+                    imageUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) => Container(
+                      color: AppColors.primary.withValues(alpha: 0.2),
+                      child: const Center(
+                        child: Icon(Icons.music_note,
+                            color: AppColors.primary, size: 30),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withValues(alpha: 0.8),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 8,
+                  right: 8,
+                  bottom: 8,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        artists[index],
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        index < roles.length ? roles[index] : 'PERFORMER',
+                        style: const TextStyle(
+                          color: Color(0xFFC49B63),
+                          fontSize: 9,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ),
+  ),
+  const SizedBox(height: 20),
+],
 
                           // Venue Info
                           Container(
@@ -302,7 +353,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                 margin: const EdgeInsets.only(bottom: 10),
                                 padding: const EdgeInsets.all(14),
                                 decoration: BoxDecoration(
-                                  color: selected ? color.withOpacity(0.1) : Colors.white,
+                                  color: selected ? color.withValues(alpha: 0.1) : Colors.white,
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
                                     color: selected ? color : AppColors.borderGrey,
@@ -346,7 +397,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                 ),
                               ),
                             );
-                          }).toList(),
+                          }),
 
                           // Ticket count
                           if (_selectedTier != -1)
@@ -374,7 +425,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 20, vertical: 6),
                                         decoration: BoxDecoration(
-                                          color: AppColors.primary.withOpacity(0.1),
+                                          color: AppColors.primary.withValues(alpha: 0.1),
                                           borderRadius: BorderRadius.circular(6),
                                         ),
                                         child: Text('$_ticketCount',
@@ -457,7 +508,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.9),
+          color: Colors.white.withValues(alpha: 0.9),
           shape: BoxShape.circle,
         ),
         child: Icon(icon, color: AppColors.primary, size: 20),

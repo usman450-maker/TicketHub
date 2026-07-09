@@ -4,6 +4,7 @@ import '../../core/constants/app_colors.dart';
 import '../../core/routes/route_names.dart';
 import '../../models/booking_data.dart';
 import '../../services/booking_service.dart';
+import '../../services/notification_service.dart';
 import '../../widgets/custom_snackbar.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -28,7 +29,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
       );
 
       if (intentResponse['success'] != true) {
-        throw Exception(intentResponse['message'] ?? 'Failed to init payment');
+        throw Exception(
+            intentResponse['message'] ?? 'Failed to init payment');
       }
 
       final clientSecret = intentResponse['clientSecret'];
@@ -60,7 +62,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
       if (!mounted) return;
 
       if (confirmResponse['success'] == true) {
+        final orderNumber =
+            confirmResponse['booking']['order_number'] ?? '';
+        final movieTitle = widget.booking.movieTitle;
+
+        // ✅ Phone pe popup notification show karo
+        await NotificationService.showBookingNotification(
+          title: '🎬 Booking Confirmed!',
+          message:
+              'Your ticket for "$movieTitle" is booked! Order #$orderNumber',
+        );
+
         CustomSnackbar.showSuccess(context, 'Payment successful!');
+
         Future.delayed(const Duration(milliseconds: 500), () {
           if (mounted) {
             Navigator.pushNamedAndRemoveUntil(
@@ -69,13 +83,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
               (route) => route.settings.name == RouteNames.home,
               arguments: {
                 'booking': widget.booking,
-                'orderNumber': confirmResponse['booking']['order_number'],
+                'orderNumber': orderNumber,
               },
             );
           }
         });
       } else {
-        throw Exception(confirmResponse['message'] ?? 'Failed to save booking');
+        throw Exception(
+            confirmResponse['message'] ?? 'Failed to save booking');
       }
     } on StripeException catch (e) {
       if (!mounted) return;
@@ -109,7 +124,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.arrow_back, color: Color(0xFFC49B63)),
+                      icon: const Icon(Icons.arrow_back,
+                          color: Color(0xFFC49B63)),
                     ),
                     const Text(
                       'TicketHub',
@@ -149,7 +165,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     children: [
                       Row(
                         children: const [
-                          Icon(Icons.credit_card, color: Color(0xFFC49B63), size: 32),
+                          Icon(Icons.credit_card,
+                              color: Color(0xFFC49B63), size: 32),
                           SizedBox(width: 12),
                           Expanded(
                             child: Column(
@@ -245,12 +262,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 const SizedBox(height: 4),
                                 Text(
                                   '${booking.venueName}\n${booking.showDate} • ${booking.showTime}',
-                                  style: const TextStyle(color: Colors.white70, fontSize: 11),
+                                  style: const TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 11),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
                                   'Seats: ${booking.selectedSeats.join(", ")}',
-                                  style: const TextStyle(color: Colors.white70, fontSize: 11),
+                                  style: const TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 11),
                                 ),
                               ],
                             ),
@@ -258,15 +279,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Divider(color: Colors.white.withValues(alpha: 0.1)),
+                      Divider(
+                          color: Colors.white.withValues(alpha: 0.1)),
                       const SizedBox(height: 12),
-                      _priceRow('Base Ticket Price', '\$${booking.basePrice.toStringAsFixed(2)}'),
+                      _priceRow('Base Ticket Price',
+                          '\$${booking.basePrice.toStringAsFixed(2)}'),
                       const SizedBox(height: 10),
-                      _priceRow('Booking Fee (5%)', '\$${booking.bookingFee.toStringAsFixed(2)}'),
+                      _priceRow('Booking Fee (5%)',
+                          '\$${booking.bookingFee.toStringAsFixed(2)}'),
                       const SizedBox(height: 10),
-                      _priceRow('Tax (10%)', '\$${booking.tax.toStringAsFixed(2)}'),
+                      _priceRow(
+                          'Tax (10%)', '\$${booking.tax.toStringAsFixed(2)}'),
                       const SizedBox(height: 12),
-                      Divider(color: Colors.white.withValues(alpha: 0.1)),
+                      Divider(
+                          color: Colors.white.withValues(alpha: 0.1)),
                       const SizedBox(height: 12),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -294,10 +320,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         width: double.infinity,
                         height: 54,
                         child: ElevatedButton(
-                          onPressed: _isProcessing ? null : _handleStripePayment,
+                          onPressed:
+                              _isProcessing ? null : _handleStripePayment,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFC49B63),
-                            disabledBackgroundColor: const Color(0xFFC49B63).withValues(alpha: 0.5),
+                            disabledBackgroundColor:
+                                const Color(0xFFC49B63)
+                                    .withValues(alpha: 0.5),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -312,9 +341,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   ),
                                 )
                               : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
                                   children: const [
-                                    Icon(Icons.lock, color: Color(0xFF3D2E15), size: 18),
+                                    Icon(Icons.lock,
+                                        color: Color(0xFF3D2E15),
+                                        size: 18),
                                     SizedBox(width: 8),
                                     Text(
                                       'PAY NOW',
@@ -334,7 +366,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: const [
-                            Icon(Icons.shield_outlined, color: Colors.white70, size: 12),
+                            Icon(Icons.shield_outlined,
+                                color: Colors.white70, size: 12),
                             SizedBox(width: 4),
                             Text(
                               'SECURE 256-BIT SSL TRANSACTION',
@@ -381,8 +414,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: const TextStyle(color: Colors.white70, fontSize: 13)),
-        Text(amount, style: const TextStyle(color: Colors.white, fontSize: 14)),
+        Text(label,
+            style:
+                const TextStyle(color: Colors.white70, fontSize: 13)),
+        Text(amount,
+            style:
+                const TextStyle(color: Colors.white, fontSize: 14)),
       ],
     );
   }

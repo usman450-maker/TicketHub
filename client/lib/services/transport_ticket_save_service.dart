@@ -23,7 +23,7 @@ class TransportTicketSaveService {
 
       final controller = ScreenshotController();
 
-      final Uint8List? imageBytes = await controller.captureFromWidget(
+      final Uint8List imageBytes = await controller.captureFromWidget(
         MediaQuery(
           data: const MediaQueryData(
             size: Size(400, 700),
@@ -75,7 +75,10 @@ class _TicketWidget extends StatelessWidget {
     required this.seatId,
   });
 
-  bool get _isSports => booking.transportType == 'sports';
+
+bool get _isSportsTicket => 
+    booking.transportType == 'sports' || booking.transportType == 'event';
+ 
 
 String get _typeLabel {
   switch (booking.transportType) {
@@ -99,8 +102,7 @@ IconData get _typeIcon {
   }
 }
 
-bool get _isSportsTicket => 
-    booking.transportType == 'sports' || booking.transportType == 'event';
+
 
   String _getCurrentDate() {
     final now = DateTime.now();
@@ -210,7 +212,7 @@ bool get _isSportsTicket =>
                 // ==========================
                 // INFO GRID (2 columns)
                 // ==========================
-                if (_isSports) ...[
+                if (_isSportsTicket) ...[
                   // Sports layout
                   Row(
                     children: [

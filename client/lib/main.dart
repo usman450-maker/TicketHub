@@ -4,24 +4,28 @@ import 'package:permission_handler/permission_handler.dart';
 import 'core/routes/app_routes.dart';
 import 'core/routes/route_names.dart';
 import 'core/theme/app_theme.dart';
+import 'services/local_notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  Stripe.publishableKey = 'pk_test_51Tp9LiHrUeFBM6o1doBtPqcw64McQWxIHIwBzmZIgn0UzaDTVqkSgPfmlITKt5Q5gxagIFDRjZJf38s9YlKyUBBQ00YTzqeMdA';
   // Initialize Stripe
-  Stripe.publishableKey = '';
   await Stripe.instance.applySettings();
 
-  // Request permissions on start
+  // ✅ Initialize Local Notifications
+  await LocalNotificationService.initialize();
+
+  // Request permissions
   await _requestPermissions();
 
   runApp(const TicketHubApp());
 }
 
 Future<void> _requestPermissions() async {
-  // Request gallery/photos permission
   await Permission.photos.request();
   await Permission.storage.request();
+  await Permission.notification.request();
 }
 
 class TicketHubApp extends StatelessWidget {
@@ -33,6 +37,8 @@ class TicketHubApp extends StatelessWidget {
       title: 'TicketHub',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
+      // ✅ Navigator key for notification click
+      navigatorKey: navigatorKey,
       initialRoute: RouteNames.splash,
       onGenerateRoute: AppRoutes.generateRoute,
     );

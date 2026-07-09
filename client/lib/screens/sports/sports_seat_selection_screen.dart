@@ -185,7 +185,7 @@ Padding(
             child: Image.network(
               'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800',
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
+              errorBuilder: (_, _, _) => Container(
                 color: AppColors.primaryLight,
               ),
             ),
@@ -197,8 +197,8 @@ Padding(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withOpacity(0.3),
-                    Colors.black.withOpacity(0.7),
+                    Colors.black.withValues(alpha: 0.3),
+                    Colors.black.withValues(alpha: 0.7),
                   ],
                 ),
               ),
@@ -223,7 +223,7 @@ Padding(
                 Text(
                   '$operatorName • $date',
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.85),
+                    color: Colors.white.withValues(alpha: 0.85),
                     fontSize: 11,
                   ),
                 ),
@@ -439,7 +439,7 @@ const SizedBox(height: 16),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
                               disabledBackgroundColor:
-                                  AppColors.primary.withOpacity(0.4),
+                                  AppColors.primary.withValues(alpha: 0.4),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -496,7 +496,7 @@ const SizedBox(height: 16),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: _categoryColor.withOpacity(0.1),
+                  color: _categoryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(3),
                 ),
                 child: Text(
@@ -547,7 +547,7 @@ const SizedBox(height: 16),
                 ? Colors.grey.shade400
                 : isSelected
                     ? _categoryColor
-                    : _categoryColor.withOpacity(0.4),
+                    : _categoryColor.withValues(alpha: 0.4),
             width: 1.2,
           ),
         ),

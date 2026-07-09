@@ -19,6 +19,7 @@ import '../../screens/movie/payment_screen.dart';
 import '../../screens/movie/booking_confirmed_screen.dart';
 import '../../models/booking_data.dart';
 import 'route_names.dart';
+import '../../screens/notifications/notifications_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -113,6 +114,12 @@ class AppRoutes {
             orderNumber: args['orderNumber'],
           ),
         );
+
+        case '/notifications':
+  return MaterialPageRoute(
+    builder: (_) => const NotificationsScreen(),
+    settings: settings,
+  );
 
       // ==========================
       // DEFAULT (404)

@@ -73,6 +73,25 @@ class StorageService {
   return token != null && token.isNotEmpty;
 }
 
+// Add these methods in StorageService class:
+
+static const String _profileImageKey = 'profile_image';
+
+static Future<void> saveProfileImage(String path) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString(_profileImageKey, path);
+}
+
+static Future<String?> getProfileImage() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString(_profileImageKey);
+}
+
+static Future<void> clearProfileImage() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove(_profileImageKey);
+}
+
   // Logout
   static Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();

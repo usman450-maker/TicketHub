@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import '../../core/constants/app_colors.dart';
 import '../../models/transport_booking.dart';
 import '../../services/transport_service.dart';
 import '../../widgets/custom_snackbar.dart';
 import 'transport_confirmed_screen.dart';
+import '../../services/notification_service.dart'; 
 
 class TransportPaymentScreen extends StatefulWidget {
   final TransportBooking booking;
@@ -64,28 +64,34 @@ Future<void> _handlePayment() async {
 
     if (!mounted) return;
 
-    if (confirmResponse['success'] == true) {
-      CustomSnackbar.showSuccess(context, 'Payment successful!');
-      
-      // Get order number safely
-      final orderNumber = confirmResponse['booking']?['order_number'] 
-        ?? 'TH-${DateTime.now().millisecondsSinceEpoch}';
-      
-      print('✅ Navigating to confirmation with order: $orderNumber');
-      
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if (mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (_) => TransportConfirmedScreen(
-                booking: widget.booking,
-                orderNumber: orderNumber,
-              ),
-            ),
-          );
-        }
-      });
+if (confirmResponse['success'] == true) {
+  final orderNumber = confirmResponse['booking']?['order_number']
+      ?? 'TH-${DateTime.now().millisecondsSinceEpoch}';
+
+  // ✅ Local notification show karo
+  await NotificationService.showBookingNotification(
+    title: '🎫 Booking Confirmed!',
+    message:
+        'Your ${widget.booking.transportType} ticket has been booked! Order #$orderNumber',
+  );
+
+  CustomSnackbar.showSuccess(context, 'Payment successful!');
+
+  Future.delayed(const Duration(milliseconds: 500), () {
+    if (mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => TransportConfirmedScreen(
+            booking: widget.booking,
+            orderNumber: orderNumber,
+          ),
+        ),
+      );
+    }
+  });
+
+
     } else {
       throw Exception(confirmResponse['message'] ?? 'Booking confirmation failed');
     }

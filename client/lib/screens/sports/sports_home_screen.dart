@@ -147,7 +147,7 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
                     decoration: BoxDecoration(
                       color: _currentBanner == i
                           ? AppColors.primary
-                          : AppColors.primary.withOpacity(0.3),
+                          : AppColors.primary.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(3),
                     ),
                   ),
@@ -316,7 +316,7 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
               child: Image.network(
                 banner['image']!,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(color: AppColors.primaryLight),
+                errorBuilder: (_, _, _) => Container(color: AppColors.primaryLight),
               ),
             ),
             Positioned.fill(
@@ -326,8 +326,8 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Colors.black.withOpacity(0.6),
-                      Colors.black.withOpacity(0.3),
+                      Colors.black.withValues(alpha: 0.6),
+                      Colors.black.withValues(alpha: 0.3),
                     ],
                   ),
                 ),
@@ -421,7 +421,7 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 10),
+            BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 10),
           ],
         ),
         child: Column(
@@ -439,7 +439,7 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
                     width: double.infinity,
                     height: 140,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                    errorBuilder: (_, _, _) => Container(
                       height: 140,
                       color: AppColors.primaryLight,
                     ),
@@ -479,7 +479,7 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.6),
+                      color: Colors.black.withValues(alpha: 0.6),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
@@ -598,7 +598,7 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10),
+            BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10),
           ],
         ),
         child: Column(
@@ -609,7 +609,7 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
+                    color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
@@ -656,7 +656,7 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.1),
+                          color: AppColors.primary.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                         child: Center(
@@ -719,7 +719,7 @@ class _SportsHomeScreenState extends State<SportsHomeScreen> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFC49B63).withOpacity(0.1),
+                          color: const Color(0xFFC49B63).withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                         child: Center(

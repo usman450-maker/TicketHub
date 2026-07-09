@@ -626,7 +626,7 @@ const SizedBox(height: 20),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withOpacity(0.1),
+                            color: AppColors.primary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
@@ -1043,8 +1043,8 @@ class _SavedPersonsSheetState extends State<_SavedPersonsSheet> {
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: p.gender == 'Female'
-                                  ? const Color(0xFFEC407A).withOpacity(0.1)
-                                  : AppColors.primary.withOpacity(0.1),
+                                  ? const Color(0xFFEC407A).withValues(alpha: 0.1)
+                                  : AppColors.primary.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(

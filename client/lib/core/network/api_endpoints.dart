@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 
 class ApiEndpoints {
   // ⚠️ Your PC IP address (find with: ipconfig)
-/ Change to YOUR IP
+  static const String _pcIp = '192.168.0.109'; // Change to YOUR IP
 
   static String get baseUrl {
     if (kIsWeb) {
-   
+      return 'http://localhost:5000/api';
     }
     return 'http://$_pcIp:5000/api';
   }
@@ -45,6 +45,20 @@ static String get createPaymentIntent => '$baseUrl/bookings/create-payment-inten
 static String get confirmBooking => '$baseUrl/bookings/confirm';
 static String get myBookings => '$baseUrl/bookings/my-bookings'; // ← NEW
 
+
+// Parks
+static String get parks => '$baseUrl/parks';
+static String get parkPaymentIntent => '$baseUrl/parks/payment-intent';
+static String get confirmParkBooking => '$baseUrl/parks/confirm';
+static String get myParkBookings => '$baseUrl/parks/bookings/my';
+
+
+// Notifications
+static String get notifications => '$baseUrl/notifications';
+static String get readAllNotifications => '$baseUrl/notifications/read-all';
+static String get clearNotifications => '$baseUrl/notifications/clear';
+static String readNotification(int id) => '$baseUrl/notifications/read/$id';
+
   // ==========================
   // PROFILE
   // ==========================
@@ -64,7 +78,11 @@ static String get confirmTransportBooking => '$baseUrl/transport/confirm';
 static String get myTransportBookings => '$baseUrl/transport/my-bookings';
 
 
-  static const String tmdbApiKey = '; // ⚠️ Paste your TMDB key
+// Refunds
+static String get requestRefund => '$baseUrl/refunds/request';
+static String get myRefunds => '$baseUrl/refunds/my-refunds';
+
+  static const String tmdbApiKey = 'b9531bfa653b23a316f8c2bccfee1e6a'; // ⚠️ Paste your TMDB key
   static const String tmdbBaseUrl = 'https://api.themoviedb.org/3';
   static const String tmdbImageBase = 'https://image.tmdb.org/t/p/w500';
   static const String tmdbImageOriginal = 'https://image.tmdb.org/t/p/original';

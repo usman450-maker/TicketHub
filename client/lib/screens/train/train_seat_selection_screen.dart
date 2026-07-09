@@ -233,7 +233,7 @@ class _TrainSeatSelectionScreenState extends State<TrainSeatSelectionScreen> {
                                           style: const TextStyle(fontSize: 11, color: AppColors.textGrey),
                                         ),
                                         Text(
-                                          '${widget.booking.classType} • ${totalBogies} Bogies',
+                                          '${widget.booking.classType} • $totalBogies Bogies',
                                           style: const TextStyle(fontSize: 11, color: AppColors.textGrey),
                                         ),
                                       ],
@@ -292,7 +292,7 @@ class _TrainSeatSelectionScreenState extends State<TrainSeatSelectionScreen> {
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Text(
-                                                    'B${bogieNum}',
+                                                    'B$bogieNum',
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight: FontWeight.bold,
@@ -355,7 +355,7 @@ class _TrainSeatSelectionScreenState extends State<TrainSeatSelectionScreen> {
                                 Container(
                                   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primary.withOpacity(0.1),
+                                    color: AppColors.primary.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Row(
@@ -459,7 +459,7 @@ class _TrainSeatSelectionScreenState extends State<TrainSeatSelectionScreen> {
                                 : null,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
-                              disabledBackgroundColor: AppColors.primary.withOpacity(0.4),
+                              disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.4),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -547,7 +547,7 @@ class _TrainSeatSelectionScreenState extends State<TrainSeatSelectionScreen> {
                     }),
                   ),
                   // Aisle
-                  Container(
+                  SizedBox(
                     width: 30,
                     child: Center(
                       child: Text(
@@ -603,7 +603,7 @@ class _TrainSeatSelectionScreenState extends State<TrainSeatSelectionScreen> {
                   ? Colors.grey.shade400
                   : isSelected
                       ? berthColor
-                      : berthColor.withOpacity(0.4),
+                      : berthColor.withValues(alpha: 0.4),
               width: 1.5,
             ),
           ),
@@ -617,7 +617,7 @@ class _TrainSeatSelectionScreenState extends State<TrainSeatSelectionScreen> {
                       ? Colors.grey.shade600
                       : isSelected
                           ? berthColor.withRed(berthColor.red - 20)
-                          : berthColor.withOpacity(0.15),
+                          : berthColor.withValues(alpha: 0.15),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(4),
                     bottomLeft: Radius.circular(4),

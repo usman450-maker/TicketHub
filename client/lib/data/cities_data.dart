@@ -236,14 +236,14 @@ class CitiesData {
   // ==========================
   // POPULAR TRAIN ROUTES
   // ==========================
-  static const List<Map<String, dynamic>> popularTrainRoutes = [
+static const List<Map<String, dynamic>> popularTrainRoutes = [
     {
       'from': 'KHI',
       'to': 'LHR',
       'fromCity': 'Karachi',
       'toCity': 'Lahore',
       'price': 'From PKR 2,500',
-      'image': 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800',
+      'image': 'https://images.unsplash.com/photo-1532105956626-9569c03602f6?w=800',
     },
     {
       'from': 'LHR',
@@ -251,7 +251,7 @@ class CitiesData {
       'fromCity': 'Lahore',
       'toCity': 'Rawalpindi',
       'price': 'From PKR 1,800',
-      'image': 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800',
+      'image': 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800',
     },
     {
       'from': 'KHI',
@@ -259,7 +259,7 @@ class CitiesData {
       'fromCity': 'Karachi',
       'toCity': 'Peshawar',
       'price': 'From PKR 3,500',
-      'image': 'https://images.unsplash.com/photo-1568432571980-8daa46e51ff9?w=800',
+      'image': 'https://images.unsplash.com/photo-1509105494475-4f3e4dfb40ca?w=800',
     },
     {
       'from': 'LHR',
@@ -267,7 +267,7 @@ class CitiesData {
       'fromCity': 'Lahore',
       'toCity': 'Multan',
       'price': 'From PKR 1,500',
-      'image': 'https://images.unsplash.com/photo-1580741569345-42d63f65f89f?w=800',
+      'image': 'https://images.unsplash.com/photo-1527684651079-3ca288e9e2e4?w=800',
     },
   ];
 

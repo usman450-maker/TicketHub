@@ -112,4 +112,29 @@ class ApiService {
     }
     return 'Something went wrong. Please try again.';
   }
+
+  static Future<Map<String, dynamic>> delete({
+  required String url,
+  String? token,
+  Map<String, dynamic>? body,
+}) async {
+  try {
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
+
+    final response = await http
+        .delete(
+          Uri.parse(url),
+          headers: headers,
+          body: body != null ? jsonEncode(body) : null,
+        )
+        .timeout(timeout);
+
+    return _handleResponse(response);
+  } catch (e) {
+    return {'success': false, 'message': _getErrorMessage(e)};
+  }
+}
 }

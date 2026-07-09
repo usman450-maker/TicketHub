@@ -23,4 +23,5 @@ static const String seatSelection = '/seat-selection';
 static const String bookingSummary = '/booking-summary';
 static const String payment = '/payment';
 static const String bookingConfirmed = '/booking-confirmed';
+static const String notifications = '/notifications';
 }

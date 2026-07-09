@@ -4,6 +4,7 @@ import 'tabs/explore_tab.dart';
 import 'tabs/search_tab.dart';
 import 'tabs/bookings_tab.dart';
 import 'tabs/profile_tab.dart';
+import 'tabs/wallet_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const ExploreTab(),
     const SearchTab(),
     const BookingsTab(),
+    const WalletTab(),
     const ProfileTab(),
   ];
 
@@ -30,30 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         index: _currentIndex,
         children: _tabs,
       ),
-      floatingActionButton: _currentIndex == 0
-          ? Container(
-              width: 56,
-              height: 56,
-              margin: const EdgeInsets.only(top: 40),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.3),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 28,
-              ),
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      // ✅ "+" button removed
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -67,14 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            padding:
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildNavItem(0, Icons.explore_outlined, 'Explore'),
                 _buildNavItem(1, Icons.search, 'Search'),
-                _buildNavItem(2, Icons.confirmation_number_outlined, 'Bookings'),
-                _buildNavItem(3, Icons.person_outline, 'Profile'),
+                _buildNavItem(
+                    2, Icons.confirmation_number_outlined, 'Bookings'),
+                _buildNavItem(
+                    3, Icons.account_balance_wallet_outlined, 'Wallet'),
+                _buildNavItem(4, Icons.person_outline, 'Profile'),
               ],
             ),
           ),
@@ -89,22 +72,29 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () => setState(() => _currentIndex = index),
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+        padding:
+            const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               icon,
               size: 24,
-              color: isSelected ? AppColors.primary : AppColors.textGrey,
+              color: isSelected
+                  ? AppColors.primary
+                  : AppColors.textGrey,
             ),
             const SizedBox(height: 4),
             Text(
               label,
               style: TextStyle(
-                fontSize: 11,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                color: isSelected ? AppColors.primary : AppColors.textGrey,
+                fontSize: 10,
+                fontWeight: isSelected
+                    ? FontWeight.w600
+                    : FontWeight.w400,
+                color: isSelected
+                    ? AppColors.primary
+                    : AppColors.textGrey,
               ),
             ),
           ],

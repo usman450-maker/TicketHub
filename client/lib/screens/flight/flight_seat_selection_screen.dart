@@ -167,7 +167,7 @@ class _FlightSeatSelectionScreenState extends State<FlightSeatSelectionScreen> {
     if (!_isRowInSelectedClass(row)) {
       return Colors.grey.shade300;
     }
-    return _getSeatClassColor(row).withOpacity(0.4);
+    return _getSeatClassColor(row).withValues(alpha: 0.4);
   }
 
   @override
@@ -263,7 +263,7 @@ class _FlightSeatSelectionScreenState extends State<FlightSeatSelectionScreen> {
                             margin: const EdgeInsets.symmetric(horizontal: 16),
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: _getUserClassColor().withOpacity(0.1),
+                              color: _getUserClassColor().withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
                                 color: _getUserClassColor(),
@@ -369,7 +369,7 @@ class _FlightSeatSelectionScreenState extends State<FlightSeatSelectionScreen> {
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.bold,
                                                   color: AppColors.textGrey)),
-                                        )).toList(),
+                                        )),
                                     const SizedBox(width: 20),
                                   ],
                                 ),
@@ -509,7 +509,7 @@ class _FlightSeatSelectionScreenState extends State<FlightSeatSelectionScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
                               disabledBackgroundColor:
-                                  AppColors.primary.withOpacity(0.4),
+                                  AppColors.primary.withValues(alpha: 0.4),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),

@@ -223,7 +223,7 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
                     decoration: BoxDecoration(
                       color: _currentBanner == i
                           ? AppColors.primary
-                          : AppColors.primary.withOpacity(0.3),
+                          : AppColors.primary.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(3),
                     ),
                   ),
@@ -241,7 +241,7 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                       ),
                     ],
@@ -358,7 +358,7 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
               child: Image.network(
                 banner['image']!,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
+                errorBuilder: (_, _, _) => Container(
                   color: Color(int.parse('0xFF${banner['color']}')),
                 ),
               ),
@@ -370,8 +370,8 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Colors.black.withOpacity(0.3),
-                      Colors.black.withOpacity(0.7),
+                      Colors.black.withValues(alpha: 0.3),
+                      Colors.black.withValues(alpha: 0.7),
                     ],
                   ),
                 ),
@@ -388,9 +388,9 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.white.withOpacity(0.3)),
+                          border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
                         ),
                         child: const Text(
                           'TRAIN',
@@ -420,7 +420,7 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
                       Text(
                         banner['tagline']!,
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.85),
+                          color: Colors.white.withValues(alpha: 0.85),
                           fontSize: 13,
                         ),
                       ),
@@ -617,7 +617,7 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
                 child: Image.network(
                   route['image'],
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(color: AppColors.primaryLight),
+                  errorBuilder: (_, _, _) => Container(color: AppColors.primaryLight),
                 ),
               ),
               Positioned.fill(
@@ -626,7 +626,7 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.transparent, Colors.black.withOpacity(0.8)],
+                      colors: [Colors.transparent, Colors.black.withValues(alpha: 0.8)],
                     ),
                   ),
                 ),
@@ -642,7 +642,7 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withValues(alpha: 0.3),
                             borderRadius: BorderRadius.circular(3),
                           ),
                           child: Text(
@@ -656,7 +656,7 @@ class _TrainSearchScreenState extends State<TrainSearchScreen> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withValues(alpha: 0.3),
                             borderRadius: BorderRadius.circular(3),
                           ),
                           child: Text(

@@ -154,8 +154,8 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
-                                  Colors.black.withOpacity(0.5),
-                                  Colors.black.withOpacity(0.8),
+                                  Colors.black.withValues(alpha: 0.5),
+                                  Colors.black.withValues(alpha: 0.8),
                                 ],
                               ),
                             ),
@@ -169,7 +169,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                               icon: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.9),
+                                  color: Colors.white.withValues(alpha: 0.9),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(Icons.arrow_back,
@@ -190,7 +190,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                                   _tag(m['league'], const Color(0xFFC49B63)),
                                   const SizedBox(width: 6),
                                   _tag(m['sport'],
-                                      Colors.white.withOpacity(0.2)),
+                                      Colors.white.withValues(alpha: 0.2)),
                                 ],
                               ),
                               const SizedBox(height: 8),
@@ -370,7 +370,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                             padding: const EdgeInsets.all(14),
                             decoration: BoxDecoration(
                               color: selected
-                                  ? color.withOpacity(0.1)
+                                  ? color.withValues(alpha: 0.1)
                                   : Colors.white,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
@@ -449,7 +449,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                           ),
                         ),
                       );
-                    }).toList(),
+                    }),
 
                     // Ticket count
                     if (_selectedCategory != -1)
@@ -487,7 +487,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                                         horizontal: 20, vertical: 6),
                                     decoration: BoxDecoration(
                                       color: AppColors.primary
-                                          .withOpacity(0.1),
+                                          .withValues(alpha: 0.1),
                                       borderRadius:
                                           BorderRadius.circular(6),
                                     ),
@@ -561,7 +561,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             disabledBackgroundColor:
-                                AppColors.primary.withOpacity(0.4),
+                                AppColors.primary.withValues(alpha: 0.4),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -614,7 +614,7 @@ class _MatchDetailScreenState extends State<MatchDetailScreen> {
           width: 60,
           height: 60,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.15),
+            color: color.withValues(alpha: 0.15),
             shape: BoxShape.circle,
           ),
           child: Center(

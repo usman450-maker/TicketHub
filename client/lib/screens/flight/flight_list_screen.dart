@@ -379,7 +379,7 @@ class _FlightListScreenState extends State<FlightListScreen> {
       decoration: BoxDecoration(
         color: isPremium ? const Color(0xFF152A20) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -391,8 +391,8 @@ class _FlightListScreenState extends State<FlightListScreen> {
                 height: 44,
                 decoration: BoxDecoration(
                   color: isPremium
-                      ? const Color(0xFFC49B63).withOpacity(0.2)
-                      : AppColors.primary.withOpacity(0.1),
+                      ? const Color(0xFFC49B63).withValues(alpha: 0.2)
+                      : AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -597,7 +597,7 @@ class _FlightListScreenState extends State<FlightListScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: isPremium ? Colors.white.withOpacity(0.1) : const Color(0xFFF3F4F6),
+        color: isPremium ? Colors.white.withValues(alpha: 0.1) : const Color(0xFFF3F4F6),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
