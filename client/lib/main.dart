@@ -9,9 +9,8 @@ import 'services/local_notification_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Stripe.publishableKey = 'pk_test_51Tp9LiHrUeFBM6o1doBtPqcw64McQWxIHIwBzmZIgn0UzaDTVqkSgPfmlITKt5Q5gxagIFDRjZJf38s9YlKyUBBQ00YTzqeMdA';
   // Initialize Stripe
-  await Stripe.instance.applySettings();
+  awit Stripe.instance.applySettings();
 
   // ✅ Initialize Local Notifications
   await LocalNotificationService.initialize();

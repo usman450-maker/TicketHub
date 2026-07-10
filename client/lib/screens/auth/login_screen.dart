@@ -7,6 +7,7 @@ import '../../widgets/custom_snackbar.dart';
 import '../../widgets/logo_widget.dart';
 import '../../services/google_auth_service.dart';
 
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -15,73 +16,74 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-Future<void> _handleGoogleLogin() async {
-  setState(() => _isLoading = true);
+  Future<void> _handleGoogleLogin() async {
+    setState(() => _isLoading = true);
 
-  final response = await GoogleAuthService.googleLogin();
+    final response = await GoogleAuthService.googleLogin();
 
-  if (!mounted) return;
-  setState(() => _isLoading = false);
+    if (!mounted) return;
+    setState(() => _isLoading = false);
 
-  if (response['success'] == true) {
-    CustomSnackbar.showSuccess(context, 'Login Successful');
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          RouteNames.home,
-          (route) => false,
-        );
-      }
-    });
-  } else {
-    // If no account exists, show message
-    if (response['message']?.contains('No account found') == true) {
-      _showNoAccountDialog();
+    if (response['success'] == true) {
+      CustomSnackbar.showSuccess(context, 'Login Successful');
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RouteNames.home,
+            (route) => false,
+          );
+        }
+      });
     } else {
-      CustomSnackbar.showError(
-          context, response['message'] ?? 'Login failed');
+      if (response['message']?.contains('No account found') == true) {
+        _showNoAccountDialog();
+      } else {
+        CustomSnackbar.showError(
+            context, response['message'] ?? 'Login failed');
+      }
     }
   }
-}
 
-void _showNoAccountDialog() {
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      title: Row(
-        children: const [
-          Icon(Icons.info_outline, color: AppColors.primary),
-          SizedBox(width: 10),
-          Text('No Account'),
+  void _showNoAccountDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Row(
+          children: const [
+            Icon(Icons.info_outline, color: AppColors.primary),
+            SizedBox(width: 10),
+            Text('No Account'),
+          ],
+        ),
+        content: const Text(
+          'No account found with this email. Please sign up first.',
+          style: TextStyle(height: 1.5),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, RouteNames.signup);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+            ),
+            child:
+                const Text('Sign Up', style: TextStyle(color: Colors.white)),
+          ),
         ],
       ),
-      content: const Text(
-        'No account found with this email. Please sign up first.',
-        style: TextStyle(height: 1.5),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, RouteNames.signup);
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
-          ),
-          child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
-        ),
-      ],
-    ),
-  );
-}
+    );
+  }
+
   bool _obscurePassword = true;
   bool _isLoading = false;
   final _emailController = TextEditingController();
@@ -118,19 +120,19 @@ void _showNoAccountDialog() {
     if (!mounted) return;
     setState(() => _isLoading = false);
 
-   if (response['success'] == true) {
-  CustomSnackbar.showSuccess(
-      context, response['message'] ?? 'Login Successful');
-  Future.delayed(const Duration(milliseconds: 500), () {
-    if (mounted) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        RouteNames.home,
-        (route) => false,
-      );
-    }
-  });
-}else {
+    if (response['success'] == true) {
+      CustomSnackbar.showSuccess(
+          context, response['message'] ?? 'Login Successful');
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RouteNames.home,
+            (route) => false,
+          );
+        }
+      });
+    } else {
       CustomSnackbar.showError(
           context, response['message'] ?? 'Login failed');
     }
@@ -142,12 +144,12 @@ void _showNoAccountDialog() {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16), // ✅ Reduced from 20
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 10), // ✅ Reduced from 20
               Container(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(20), // ✅ Reduced from 24
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -162,33 +164,33 @@ void _showNoAccountDialog() {
                 child: Column(
                   children: [
                     const LogoWidget(),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16), // ✅ Reduced from 24
                     const Text(
                       AppStrings.welcomeBack,
                       style: TextStyle(
-                        fontSize: 28,
+                        fontSize: 24, // ✅ Reduced from 28
                         fontWeight: FontWeight.bold,
                         color: AppColors.primary,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 6), // ✅ Reduced from 10
                     const Text(
                       AppStrings.loginSubtitle,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14, // ✅ Reduced from 16
                         color: AppColors.textGrey,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 20), // ✅ Reduced from 32
                     _buildLabel(AppStrings.email),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6), // ✅ Reduced from 8
                     _buildUnderlineInput(
                       controller: _emailController,
                       icon: Icons.email_outlined,
                       hint: 'name@example.com',
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16), // ✅ Reduced from 24
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -202,14 +204,14 @@ void _showNoAccountDialog() {
                             AppStrings.forgotPassword,
                             style: TextStyle(
                               color: AppColors.primary,
-                              fontSize: 14,
+                              fontSize: 13, // ✅ Reduced from 14
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6), // ✅ Reduced from 8
                     _buildUnderlineInput(
                       controller: _passwordController,
                       icon: Icons.lock_outline,
@@ -221,15 +223,16 @@ void _showNoAccountDialog() {
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
                           color: AppColors.textGrey,
+                          size: 20, // ✅ Added smaller icon
                         ),
                         onPressed: () => setState(
                             () => _obscurePassword = !_obscurePassword),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20), // ✅ Reduced from 30
                     SizedBox(
                       width: double.infinity,
-                      height: 54,
+                      height: 48, // ✅ Reduced from 54
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _handleLogin,
                         style: ElevatedButton.styleFrom(
@@ -242,8 +245,8 @@ void _showNoAccountDialog() {
                         ),
                         child: _isLoading
                             ? const SizedBox(
-                                width: 24,
-                                height: 24,
+                                width: 20, // ✅ Reduced from 24
+                                height: 20,
                                 child: CircularProgressIndicator(
                                   color: Colors.white,
                                   strokeWidth: 2.5,
@@ -253,52 +256,65 @@ void _showNoAccountDialog() {
                                 AppStrings.login,
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15,
+                                  fontSize: 14, // ✅ Reduced from 15
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 1.2,
                                 ),
                               ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16), // ✅ Reduced from 24
                     _buildDividerWithText(AppStrings.orContinueWith),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 14), // ✅ Reduced from 20
                     Row(
                       children: [
-                  Expanded(
-  child: GestureDetector(
-    onTap: _isLoading ? null : _handleGoogleLogin,
-    child: _buildSocialButton(
-      label: 'Google',
-      iconWidget: const Text('G',
-          style: TextStyle(
-            color: Colors.blue,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          )),
-    ),
-  ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: _isLoading ? null : _handleGoogleLogin,
+                            child: _buildSocialButton(
+                              label: 'Google',
+                              // ✅ Real Google icon with 4 colors
+                             iconWidget: Image.network(
+  'https://developers.google.com/identity/images/g-logo.png',
+  width: 18,
+  height: 18,
+  errorBuilder: (context, error, stackTrace) {
+    return const Text(
+      'G',
+      style: TextStyle(
+        color: Color(0xFF4285F4),
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  },
 ),
-                        const SizedBox(width: 12),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10), // ✅ Reduced from 12
                         Expanded(
                           child: _buildSocialButton(
                             label: 'Apple',
                             iconWidget: const Icon(
                               Icons.apple,
-                              size: 22,
+                              size: 20, // ✅ Reduced from 22
                               color: Colors.black,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16), // ✅ Reduced from 24
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
                           AppStrings.noAccount,
-                          style: TextStyle(color: AppColors.textDark),
+                          style: TextStyle(
+                            color: AppColors.textDark,
+                            fontSize: 13, // ✅ Added smaller
+                          ),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -309,6 +325,7 @@ void _showNoAccountDialog() {
                             style: TextStyle(
                               color: AppColors.primary,
                               fontWeight: FontWeight.bold,
+                              fontSize: 13, // ✅ Added smaller
                             ),
                           ),
                         ),
@@ -317,17 +334,17 @@ void _showNoAccountDialog() {
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20), // ✅ Reduced from 40
               const Text(
                 AppStrings.splashTagline,
                 style: TextStyle(
-                  fontSize: 11,
+                  fontSize: 10, // ✅ Reduced from 11
                   color: AppColors.textGrey,
                   letterSpacing: 2,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10), // ✅ Reduced from 20
             ],
           ),
         ),
@@ -341,7 +358,7 @@ void _showNoAccountDialog() {
       child: Text(
         text,
         style: const TextStyle(
-          fontSize: 15,
+          fontSize: 14, // ✅ Reduced from 15
           fontWeight: FontWeight.w600,
           color: AppColors.textDark,
         ),
@@ -367,13 +384,17 @@ void _showNoAccountDialog() {
         obscureText: obscure,
         keyboardType:
             obscure ? TextInputType.text : TextInputType.emailAddress,
+        style: const TextStyle(fontSize: 14), // ✅ Added smaller text
         decoration: InputDecoration(
           hintText: hint,
           border: InputBorder.none,
-          prefixIcon: Icon(icon, color: AppColors.textGrey),
+          prefixIcon: Icon(icon, color: AppColors.textGrey, size: 20), // ✅ Smaller
           suffixIcon: suffix,
-          hintStyle:
-              const TextStyle(color: AppColors.textGrey, fontSize: 16),
+          isDense: true, // ✅ Compact
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 12), // ✅ Reduced padding
+          hintStyle: const TextStyle(
+              color: AppColors.textGrey, fontSize: 14), // ✅ Reduced
         ),
       ),
     );
@@ -389,7 +410,7 @@ void _showNoAccountDialog() {
             text,
             style: const TextStyle(
               color: AppColors.textGrey,
-              fontSize: 11,
+              fontSize: 10, // ✅ Reduced from 11
               fontWeight: FontWeight.w600,
               letterSpacing: 1.2,
             ),
@@ -405,7 +426,7 @@ void _showNoAccountDialog() {
     required Widget iconWidget,
   }) {
     return Container(
-      height: 50,
+      height: 44, // ✅ Reduced from 50
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.borderGrey),
         borderRadius: BorderRadius.circular(10),
@@ -419,7 +440,7 @@ void _showNoAccountDialog() {
             label,
             style: const TextStyle(
               color: AppColors.textDark,
-              fontSize: 15,
+              fontSize: 14, // ✅ Reduced from 15
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -428,3 +449,4 @@ void _showNoAccountDialog() {
     );
   }
 }
+

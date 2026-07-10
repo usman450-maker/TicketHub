@@ -15,14 +15,12 @@ export default function LandingPage() {
   const [mobileMenu, setMobileMenu] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
-  // ✅ Scroll detection for navbar
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // ✅ Smooth scroll to section
   const scrollToSection = (id) => {
     const element = document.getElementById(id)
     if (element) {
@@ -31,7 +29,6 @@ export default function LandingPage() {
     setMobileMenu(false)
   }
 
-  // ✅ Intersection Observer for animations
   const useInView = () => {
     const ref = useRef(null)
     const [isVisible, setIsVisible] = useState(false)
@@ -127,7 +124,6 @@ export default function LandingPage() {
 
   const partners = ['CINEMAX', 'SkyLine', 'METRO', 'GlobalEvent', 'URBAN BUS', 'ARENA']
 
-  // ✅ Animated Section Component
   const AnimatedSection = ({ children, className = '', delay = 0 }) => {
     const [ref, isVisible] = useInView()
     return (
@@ -184,18 +180,15 @@ export default function LandingPage() {
               ))}
             </div>
 
-            <div className="hidden md:flex items-center gap-4">
-              <Link to="/login" className={`text-sm transition-colors duration-300 ${
-                scrolled ? 'text-gray-600' : 'text-white/80'
-              }`}>
-                Log in
-              </Link>
+            {/* ✅ Admin Login Button */}
+            <div className="hidden md:flex items-center gap-3">
               <Link 
-                to="/signup" 
-                className="text-white px-5 py-2 rounded-full text-sm font-semibold transition-all hover:scale-105 hover:shadow-lg"
+                to="/login" 
+                className="flex items-center gap-2 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 hover:shadow-lg"
                 style={{backgroundColor: '#BB8A52'}}
               >
-                Get Started
+                <Lock size={14} />
+                Admin Login
               </Link>
             </div>
 
@@ -211,7 +204,7 @@ export default function LandingPage() {
 
         {/* Mobile Menu */}
         {mobileMenu && (
-          <div className="md:hidden bg-white border-t border-gray-100 shadow-xl animate-fade-in-down">
+          <div className="md:hidden bg-white border-t border-gray-100 shadow-xl">
             <div className="px-6 py-4 space-y-3">
               {['solutions', 'platform', 'how-to-use', 'mobile-app', 'enterprise'].map((id) => (
                 <button 
@@ -223,14 +216,15 @@ export default function LandingPage() {
                   {id.replace('-', ' ')}
                 </button>
               ))}
-              <div className="pt-3 border-t border-gray-100 flex gap-3">
-                <Link to="/login" className="flex-1 text-center py-2 border rounded-full text-sm font-semibold"
-                  style={{borderColor: '#0C3B2E', color: '#0C3B2E'}}>
-                  Log in
-                </Link>
-                <Link to="/signup" className="flex-1 text-center py-2 text-white rounded-full text-sm font-semibold"
-                  style={{backgroundColor: '#BB8A52'}}>
-                  Get Started
+              {/* ✅ Mobile Admin Login */}
+              <div className="pt-3 border-t border-gray-100">
+                <Link 
+                  to="/login" 
+                  className="flex items-center justify-center gap-2 text-white py-3 rounded-full text-sm font-semibold"
+                  style={{backgroundColor: '#BB8A52'}}
+                >
+                  <Lock size={14} />
+                  Admin Login
                 </Link>
               </div>
             </div>
@@ -267,12 +261,14 @@ export default function LandingPage() {
                 and theme park bookings through one centralized enterprise-grade platform.
               </p>
               <div className="flex flex-wrap gap-3 animate-fade-in-up delay-400">
+                {/* ✅ Admin Login Button (Access Portal) */}
                 <Link 
-                  to="/signup"
+                  to="/login"
                   className="inline-flex items-center gap-2 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all hover:scale-105 hover:shadow-xl"
                   style={{backgroundColor: '#BB8A52'}}
                 >
-                  Access Portal
+                  <Lock size={16} />
+                  Admin Login
                   <ArrowRight size={16} />
                 </Link>
                 <button className="text-white/90 hover:text-white text-sm font-medium flex items-center gap-2 px-4 py-3 rounded-full border border-white/30 hover:bg-white/10 transition-all">
@@ -338,7 +334,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ============ SOLUTIONS - COMPREHENSIVE MANAGEMENT ============ */}
+      {/* ============ SOLUTIONS ============ */}
       <section id="solutions" className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <AnimatedSection>
@@ -352,7 +348,6 @@ export default function LandingPage() {
             </div>
           </AnimatedSection>
 
-          {/* Main 6 cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             {services.map((service, i) => (
               <AnimatedSection key={i} delay={i * 100}>
@@ -378,7 +373,6 @@ export default function LandingPage() {
             ))}
           </div>
 
-          {/* Extra 3 cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {extraCards.map((card, i) => (
               <AnimatedSection key={i} delay={(i + 6) * 100}>
@@ -428,12 +422,10 @@ export default function LandingPage() {
             {howToUseSteps.map((step, i) => (
               <AnimatedSection key={i} delay={i * 150}>
                 <div className="relative text-center group">
-                  {/* Connector Line */}
                   {i < 3 && (
                     <div className="hidden md:block absolute top-12 left-[60%] w-[80%] h-0.5 bg-gray-200 z-0"></div>
                   )}
                   
-                  {/* Step Number */}
                   <div className="relative z-10 w-24 h-24 mx-auto mb-6 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:shadow-xl group-hover:-translate-y-2"
                     style={{backgroundColor: '#0C3B2E'}}>
                     <step.icon className="text-white" size={36} />
@@ -456,7 +448,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ============ PLATFORM - ENTERPRISE INFRASTRUCTURE ============ */}
+      {/* ============ PLATFORM ============ */}
       <section id="platform" className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <AnimatedSection>
@@ -491,24 +483,19 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ============ MOBILE APP SECTION ============ */}
+      {/* ============ MOBILE APP ============ */}
       <section id="mobile-app" className="py-24" style={{backgroundColor: '#0C3B2E'}}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Left - Phone Mockup */}
             <AnimatedSection>
               <div className="relative flex justify-center">
-                {/* Phone Frame */}
                 <div className="relative w-72 h-[580px] bg-gray-900 rounded-[3rem] p-3 shadow-2xl border-4 border-gray-700">
                   <div className="w-full h-full rounded-[2.5rem] overflow-hidden bg-white relative">
-                    {/* Status Bar */}
                     <div className="h-12 flex items-center justify-center" style={{backgroundColor: '#0C3B2E'}}>
                       <div className="w-20 h-5 bg-black rounded-full"></div>
                     </div>
                     
-                    {/* App Content */}
                     <div className="p-4" style={{backgroundColor: '#F9FAFB'}}>
-                      {/* App Header */}
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
                           <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{backgroundColor: '#6D9773'}}>
@@ -519,17 +506,14 @@ export default function LandingPage() {
                         <Bell size={18} style={{color: '#0C3B2E'}} />
                       </div>
 
-                      {/* Greeting */}
                       <h3 className="text-lg font-bold mb-1" style={{color: '#0C3B2E'}}>Hello, Ahmed</h3>
                       <p className="text-xs text-gray-500 mb-4">Where would you like to go?</p>
 
-                      {/* Search */}
                       <div className="bg-white rounded-full px-3 py-2 mb-4 shadow-sm flex items-center gap-2">
                         <Search size={14} className="text-gray-400" />
                         <span className="text-xs text-gray-400">Search movies, flights...</span>
                       </div>
 
-                      {/* Categories */}
                       <div className="grid grid-cols-4 gap-2 mb-4">
                         {[
                           { icon: Film, label: 'Movies' },
@@ -546,7 +530,6 @@ export default function LandingPage() {
                         ))}
                       </div>
 
-                      {/* Trending Card */}
                       <div className="bg-white rounded-xl p-3 shadow-sm">
                         <div className="h-20 rounded-lg mb-2 overflow-hidden">
                           <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400"
@@ -556,7 +539,6 @@ export default function LandingPage() {
                         <p className="text-[9px] text-gray-500">Avengers • IMAX</p>
                       </div>
 
-                      {/* Bottom Nav */}
                       <div className="flex justify-around mt-4 pt-3 border-t border-gray-200">
                         {[
                           { icon: '🏠', label: 'Home' },
@@ -575,7 +557,6 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Floating elements */}
                 <div className="absolute -top-4 -right-8 bg-white rounded-xl shadow-xl p-3 animate-float z-20">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{backgroundColor: '#6D9773'}}>
@@ -602,7 +583,6 @@ export default function LandingPage() {
               </div>
             </AnimatedSection>
 
-            {/* Right - Features */}
             <div className="text-white">
               <AnimatedSection>
                 <div className="inline-flex items-center gap-2 text-xs mb-4 tracking-widest" style={{color: '#BB8A52'}}>
@@ -653,7 +633,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ============ ENTERPRISE - INSIGHTFUL DATA ============ */}
+      {/* ============ ENTERPRISE ============ */}
       <section id="enterprise" className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -789,14 +769,17 @@ export default function LandingPage() {
                     Ready to manage bookings smarter?
                   </h3>
                   <p className="text-white/70 text-sm">
-                    Join 500+ businesses who have transformed their operations with TicketHub Admin Portal.
+                    Login to your admin portal and start managing bookings, refunds, and analytics.
                   </p>
                 </div>
                 <div className="flex gap-3 flex-shrink-0">
-                  <Link to="/signup"
-                    className="text-white px-6 py-3 rounded-full text-sm font-semibold transition-all hover:scale-105 hover:shadow-xl"
+                  {/* ✅ Admin Login Button */}
+                  <Link to="/login"
+                    className="flex items-center gap-2 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all hover:scale-105 hover:shadow-xl"
                     style={{backgroundColor: '#BB8A52'}}>
-                    Access Portal
+                    <Lock size={16} />
+                    Admin Login
+                    <ArrowRight size={16} />
                   </Link>
                   <button className="border border-white/30 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-white/10 transition-all">
                     Contact Sales

@@ -8,6 +8,7 @@ import '../../widgets/logo_widget.dart';
 import '../../services/google_auth_service.dart';
 import 'google_signup_confirm_screen.dart';
 
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -37,99 +38,99 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
+  Future<void> _handleGoogleSignup() async {
+    setState(() => _isLoading = true);
 
+    final response = await GoogleAuthService.pickGoogleEmail();
 
-Future<void> _handleGoogleSignup() async {
-  setState(() => _isLoading = true);
+    if (!mounted) return;
+    setState(() => _isLoading = false);
 
-  final response = await GoogleAuthService.pickGoogleEmail();
-
-  if (!mounted) return;
-  setState(() => _isLoading = false);
-
-  if (response['success'] == true) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => GoogleSignupConfirmScreen(
-          email: response['email'],
-          name: response['name'],
+    if (response['success'] == true) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => GoogleSignupConfirmScreen(
+            email: response['email'],
+            name: response['name'],
+          ),
         ),
-      ),
+      );
+    } else {
+      CustomSnackbar.showError(
+          context, response['message'] ?? 'Failed to get Google account');
+    }
+  }
+
+  Future<void> _handleSignup() async {
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final phone = _phoneController.text.trim();
+    final password = _passwordController.text;
+    final confirm = _confirmController.text;
+
+    if (name.isEmpty ||
+        email.isEmpty ||
+        phone.isEmpty ||
+        password.isEmpty ||
+        confirm.isEmpty) {
+      CustomSnackbar.showError(context, 'Please fill all fields');
+      return;
+    }
+
+    if (!email.contains('@')) {
+      CustomSnackbar.showError(context, 'Please enter a valid email');
+      return;
+    }
+
+    if (phone.length < 10) {
+      CustomSnackbar.showError(context, 'Please enter a valid phone number');
+      return;
+    }
+
+    if (password.length < 6) {
+      CustomSnackbar.showError(
+          context, 'Password must be at least 6 characters');
+      return;
+    }
+
+    if (password != confirm) {
+      CustomSnackbar.showError(context, 'Passwords do not match');
+      return;
+    }
+
+    if (!_agreeTerms) {
+      CustomSnackbar.showError(
+          context, 'Please agree to Terms & Conditions');
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    final response = await AuthService.sendSignupOtp(
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
     );
-  } else {
-    CustomSnackbar.showError(
-        context, response['message'] ?? 'Failed to get Google account');
+
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+
+    if (response['success'] == true) {
+      CustomSnackbar.showSuccess(
+          context, response['message'] ?? 'OTP sent to your email');
+
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          Navigator.pushNamed(context, RouteNames.signupOtp);
+        }
+      });
+    } else {
+      CustomSnackbar.showError(
+          context, response['message'] ?? 'Failed to send OTP');
+    }
   }
-}
-Future<void> _handleSignup() async {
-  final name = _nameController.text.trim();
-  final email = _emailController.text.trim();
-  final phone = _phoneController.text.trim();
-  final password = _passwordController.text;
-  final confirm = _confirmController.text;
-
-  if (name.isEmpty || email.isEmpty || phone.isEmpty || 
-      password.isEmpty || confirm.isEmpty) {
-    CustomSnackbar.showError(context, 'Please fill all fields');
-    return;
-  }
-
-  if (!email.contains('@')) {
-    CustomSnackbar.showError(context, 'Please enter a valid email');
-    return;
-  }
-
-  if (phone.length < 10) {
-    CustomSnackbar.showError(context, 'Please enter a valid phone number');
-    return;
-  }
-
-  if (password.length < 6) {
-    CustomSnackbar.showError(
-        context, 'Password must be at least 6 characters');
-    return;
-  }
-
-  if (password != confirm) {
-    CustomSnackbar.showError(context, 'Passwords do not match');
-    return;
-  }
-
-  if (!_agreeTerms) {
-    CustomSnackbar.showError(
-        context, 'Please agree to Terms & Conditions');
-    return;
-  }
-
-  setState(() => _isLoading = true);
-
-  // Step 1: Send OTP first
-  final response = await AuthService.sendSignupOtp(
-    name: name,
-    email: email,
-    phone: phone,
-    password: password,
-  );
-
-  if (!mounted) return;
-  setState(() => _isLoading = false);
-
-  if (response['success'] == true) {
-    CustomSnackbar.showSuccess(
-        context, response['message'] ?? 'OTP sent to your email');
-    
-    // Navigate to OTP verification screen
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        Navigator.pushNamed(context, RouteNames.signupOtp);
-      }
-    });
-  } else {
-    CustomSnackbar.showError(
-        context, response['message'] ?? 'Failed to send OTP');
-  }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -137,28 +138,29 @@ Future<void> _handleSignup() async {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16), // ✅ Reduced from 20
           child: Column(
             children: [
-              const SizedBox(height: 10),
-              const LogoWidget(size: 80),
-              const SizedBox(height: 16),
+              const SizedBox(height: 6), // ✅ Reduced from 10
+              const LogoWidget(size: 60), // ✅ Reduced from 80
+              const SizedBox(height: 10), // ✅ Reduced from 16
               const Text(
                 AppStrings.joinTicketHub,
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 22, // ✅ Reduced from 28
                   fontWeight: FontWeight.bold,
                   color: AppColors.primary,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4), // ✅ Reduced from 8
               const Text(
                 AppStrings.signupSubtitle,
-                style: TextStyle(fontSize: 15, color: AppColors.textGrey),
+                style: TextStyle(
+                    fontSize: 13, color: AppColors.textGrey), // ✅ Reduced
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16), // ✅ Reduced from 24
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(16), // ✅ Reduced from 20
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -172,20 +174,21 @@ Future<void> _handleSignup() async {
                 child: Column(
                   children: [
                     _buildBoxInput(
-                        controller: _nameController, hint: AppStrings.fullName),
-                    const SizedBox(height: 14),
+                        controller: _nameController,
+                        hint: AppStrings.fullName),
+                    const SizedBox(height: 10), // ✅ Reduced from 14
                     _buildBoxInput(
                       controller: _emailController,
                       hint: AppStrings.email,
                       keyboardType: TextInputType.emailAddress,
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 10),
                     _buildBoxInput(
                       controller: _phoneController,
                       hint: AppStrings.phoneNumber,
                       keyboardType: TextInputType.phone,
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 10),
                     _buildBoxInput(
                       controller: _passwordController,
                       hint: AppStrings.password,
@@ -196,12 +199,13 @@ Future<void> _handleSignup() async {
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
                           color: AppColors.textGrey,
+                          size: 20, // ✅ Reduced
                         ),
                         onPressed: () => setState(
                             () => _obscurePassword = !_obscurePassword),
                       ),
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 10),
                     _buildBoxInput(
                       controller: _confirmController,
                       hint: AppStrings.confirmPassword,
@@ -212,18 +216,19 @@ Future<void> _handleSignup() async {
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
                           color: AppColors.textGrey,
+                          size: 20, // ✅ Reduced
                         ),
                         onPressed: () => setState(
                             () => _obscureConfirm = !_obscureConfirm),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12), // ✅ Reduced from 16
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: 24,
-                          height: 24,
+                          width: 20, // ✅ Reduced from 24
+                          height: 20,
                           child: Checkbox(
                             value: _agreeTerms,
                             onChanged: (v) =>
@@ -240,8 +245,8 @@ Future<void> _handleSignup() async {
                             text: const TextSpan(
                               style: TextStyle(
                                 color: AppColors.textDark,
-                                fontSize: 13,
-                                height: 1.5,
+                                fontSize: 12, // ✅ Reduced from 13
+                                height: 1.4,
                               ),
                               children: [
                                 TextSpan(text: 'I agree to the '),
@@ -266,10 +271,10 @@ Future<void> _handleSignup() async {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 14), // ✅ Reduced from 20
                     SizedBox(
                       width: double.infinity,
-                      height: 52,
+                      height: 46, // ✅ Reduced from 52
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _handleSignup,
                         style: ElevatedButton.styleFrom(
@@ -282,8 +287,8 @@ Future<void> _handleSignup() async {
                         ),
                         child: _isLoading
                             ? const SizedBox(
-                                width: 24,
-                                height: 24,
+                                width: 20, // ✅ Reduced from 24
+                                height: 20,
                                 child: CircularProgressIndicator(
                                   color: Colors.white,
                                   strokeWidth: 2.5,
@@ -293,14 +298,14 @@ Future<void> _handleSignup() async {
                                 AppStrings.createAccount,
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 14,
+                                  fontSize: 13, // ✅ Reduced from 14
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 1.2,
                                 ),
                               ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 14), // ✅ Reduced from 20
                     Row(
                       children: const [
                         Expanded(child: Divider(color: AppColors.borderGrey)),
@@ -310,7 +315,7 @@ Future<void> _handleSignup() async {
                             AppStrings.orContinueWith,
                             style: TextStyle(
                               color: AppColors.textGrey,
-                              fontSize: 11,
+                              fontSize: 10, // ✅ Reduced from 11
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.2,
                             ),
@@ -319,46 +324,60 @@ Future<void> _handleSignup() async {
                         Expanded(child: Divider(color: AppColors.borderGrey)),
                       ],
                     ),
-                    const SizedBox(height: 16),
-                   GestureDetector(
-  onTap: _isLoading ? null : _handleGoogleSignup,
-  child: Container(
-    width: double.infinity,
-    height: 50,
-    decoration: BoxDecoration(
-      border: Border.all(color: AppColors.borderGrey),
-      borderRadius: BorderRadius.circular(10),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Text('G',
-            style: TextStyle(
-              color: Colors.blue,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            )),
-        SizedBox(width: 10),
-        Text('Sign up with Google',
-            style: TextStyle(
-              color: AppColors.textDark,
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-            )),
-      ],
-    ),
-  ),
+                    const SizedBox(height: 12), // ✅ Reduced from 16
+                    // ✅ Google Signup Button with Real Icon
+                    GestureDetector(
+                      onTap: _isLoading ? null : _handleGoogleSignup,
+                      child: Container(
+                        width: double.infinity,
+                        height: 44, // ✅ Reduced from 50
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.borderGrey),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // ✅ Real Google Icon (4 colors)
+                       Image.network(
+  'https://developers.google.com/identity/images/g-logo.png',
+  width: 18,
+  height: 18,
+  errorBuilder: (context, error, stackTrace) {
+    return const Text(
+      'G',
+      style: TextStyle(
+        color: Color(0xFF4285F4),
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  },
 ),
+                            const SizedBox(width: 10),
+                            const Text(
+                              'Sign up with Google',
+                              style: TextStyle(
+                                color: AppColors.textDark,
+                                fontSize: 14, // ✅ Reduced from 15
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 14), // ✅ Reduced from 20
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     AppStrings.haveAccount,
-                    style: TextStyle(color: AppColors.textDark),
+                    style: TextStyle(
+                        color: AppColors.textDark, fontSize: 13), // ✅ Reduced
                   ),
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
@@ -367,12 +386,13 @@ Future<void> _handleSignup() async {
                       style: TextStyle(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
+                        fontSize: 13, // ✅ Reduced
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10), // ✅ Reduced from 20
             ],
           ),
         ),
@@ -396,16 +416,20 @@ Future<void> _handleSignup() async {
         controller: controller,
         obscureText: obscure,
         keyboardType: keyboardType,
+        style: const TextStyle(fontSize: 14), // ✅ Added smaller text
         decoration: InputDecoration(
           hintText: hint,
           border: InputBorder.none,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          isDense: true, // ✅ Compact
+          contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14, vertical: 12), // ✅ Reduced padding
           suffixIcon: suffix,
-          hintStyle:
-              const TextStyle(color: AppColors.textGrey, fontSize: 15),
+          hintStyle: const TextStyle(
+              color: AppColors.textGrey, fontSize: 14), // ✅ Reduced
         ),
       ),
     );
   }
 }
+
+// ✅ Real Google Icon with 4 Colors (Custom Painter)

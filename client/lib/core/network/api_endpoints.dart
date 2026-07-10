@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class ApiEndpoints {
   // ⚠️ Your PC IP address (find with: ipconfig)
-  static const String _pcIp = '192.168.0.109'; // Change to YOUR IP
+  static const String _'; // Change to YOUR IP
 
   static String get baseUrl {
     if (kIsWeb) {
@@ -82,7 +82,7 @@ static String get myTransportBookings => '$baseUrl/transport/my-bookings';
 static String get requestRefund => '$baseUrl/refunds/request';
 static String get myRefunds => '$baseUrl/refunds/my-refunds';
 
-  static const String tmdbApiKey = 'b9531bfa653b23a316f8c2bccfee1e6a'; // ⚠️ Paste your TMDB key
+  static const String tmdbApa'; // ⚠️ Paste your TMDB key
   static const String tmdbBaseUrl = 'https://api.themoviedb.org/3';
   static const String tmdbImageBase = 'https://image.tmdb.org/t/p/w500';
   static const String tmdbImageOriginal = 'https://image.tmdb.org/t/p/original';
